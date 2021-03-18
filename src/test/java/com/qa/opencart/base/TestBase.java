@@ -1,7 +1,6 @@
 package com.qa.opencart.base;
 
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -25,15 +24,11 @@ public class TestBase extends DriverFactory {
 	public void setupBrowser() {
 		driverFactory = new DriverFactory();
 		driver = init_Browser("chrome");
-		prop = driverFactory.init_properties();
+		prop = driverFactory.initProperties();
 		loginPage = new LoginPage(driver);
 		accountPage = new AccountPage(driver);
 		productSearchPage = new ProductSearchPage(driver);
 		productInfoPage = new ProductInfoPage(driver);
-		driver.manage().window().maximize();
-		driver.manage().deleteAllCookies();
-		driver.get(prop.getProperty("url"));
-		driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
 	}
 
 	@AfterTest

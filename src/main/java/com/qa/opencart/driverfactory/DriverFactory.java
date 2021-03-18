@@ -32,7 +32,7 @@ public class DriverFactory {
 		else if (browserName.equalsIgnoreCase("firefox")) {
 			WebDriverManager.firefoxdriver().setup();
 			tlDriver.set(new FirefoxDriver());
-			
+
 		}
 
 		else if (browserName.equalsIgnoreCase("safari")) {
@@ -41,6 +41,9 @@ public class DriverFactory {
 			System.out.println("Select valid browser name :" + browserName);
 		}
 
+		getDriver().manage().window().maximize();
+		getDriver().manage().deleteAllCookies();
+		getDriver().get(prop.getProperty("url"));
 		return getDriver();
 	}
 
@@ -48,7 +51,7 @@ public class DriverFactory {
 		return tlDriver.get();
 	}
 
-	public Properties init_properties() {
+	public Properties initProperties() {
 		prop = new Properties();
 		FileInputStream fis = null;
 		File file = null;
@@ -78,7 +81,6 @@ public class DriverFactory {
 				fis = new FileInputStream(file);
 				prop.load(fis);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -93,7 +95,6 @@ public class DriverFactory {
 		try {
 			FileUtils.copyFile(src, destination);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
