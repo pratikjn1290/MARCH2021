@@ -48,7 +48,7 @@ public class AccountPage extends DriverFactory {
 
 	public List<String> accountSectionList() {
 		List<WebElement> sections = driver.findElements(accountSection);
-		List<String> sectionList = new ArrayList<String>();
+		List<String> sectionList = new ArrayList<>();
 		for (WebElement section : sections) {
 			sectionList.add(section.getText());
 		}

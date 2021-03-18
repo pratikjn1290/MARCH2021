@@ -33,11 +33,11 @@ public class LoginPage extends DriverFactory {
 
 	public boolean getLoginPageURL() {
 		String loginUrl = driver.getCurrentUrl();
-		boolean flag = false;
-		if (loginUrl.contains("login")) {
-			return flag = true;
+		if(loginUrl.contains("login")) {
+			return true;
+		} else {
+			return false;
 		}
-		return flag;
 	}
 
 	public boolean getForgotPasswordLink() {
@@ -46,7 +46,7 @@ public class LoginPage extends DriverFactory {
 
 	public RegistrationPage navigateToRegistrationPage() {
 		driver.findElement(registerLink).click();
-		return new RegistrationPage();
+		return new RegistrationPage(driver);
 	}
 	/*
 	 * This method returns the account page object This method is used for login

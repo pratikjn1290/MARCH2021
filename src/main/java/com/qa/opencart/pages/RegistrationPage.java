@@ -1,11 +1,18 @@
 package com.qa.opencart.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
 import com.qa.opencart.driverfactory.DriverFactory;
 import com.qa.opencart.utils.OpenCartConstants;
 
 public class RegistrationPage extends DriverFactory {
+
+	private WebDriver driver;
+
+	public RegistrationPage(WebDriver driver) {
+		this.driver = driver;
+	}
 
 	private By firstName = By.xpath("//input[@id = 'input-firstname']");
 	private By lastName = By.xpath("//input[@id = 'input-lastname']");
@@ -33,7 +40,7 @@ public class RegistrationPage extends DriverFactory {
 
 	public boolean getCurrentRegistrationURL() {
 		String url = driver.getCurrentUrl();
-		if (url.contains("register")) {
+		if(url.contains("register")) {
 			return true;
 		} else {
 			return false;

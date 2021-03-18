@@ -17,12 +17,11 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DriverFactory {
 
-	public WebDriver driver;
+	
 	Properties prop;
 
 	public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<WebDriver>();
-
-	public WebDriver init_Browser(String browserName) {
+	public WebDriver initBrowser(String browserName) {
 
 		if (browserName.equalsIgnoreCase("chrome")) {
 			WebDriverManager.chromedriver().setup();
@@ -89,7 +88,7 @@ public class DriverFactory {
 	}
 
 	public String getScreenshot() {
-		File src = ((TakesScreenshot) driver).getScreenshotAs(org.openqa.selenium.OutputType.FILE);
+		File src = ((TakesScreenshot) getDriver()).getScreenshotAs(org.openqa.selenium.OutputType.FILE);
 		String path = System.getProperty("user.dir") + "/Screenshots/" + System.currentTimeMillis() + ".png";
 		File destination = new File(path);
 		try {
