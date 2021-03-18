@@ -38,7 +38,7 @@ public class DriverFactory {
 		else if (browserName.equalsIgnoreCase("safari")) {
 			tlDriver.set(new SafariDriver());
 		} else {
-			System.out.println("Select valid browser name :" + browserName);
+			System.out.println("Select valid browser :" + browserName);
 		}
 
 		getDriver().manage().window().maximize();
