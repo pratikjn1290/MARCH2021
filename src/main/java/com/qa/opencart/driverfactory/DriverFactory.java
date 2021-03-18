@@ -42,7 +42,7 @@ public class DriverFactory {
 
 		getDriver().manage().window().maximize();
 		getDriver().manage().deleteAllCookies();
-		getDriver().get(prop.getProperty("url"));
+		getDriver().get(prop.getProperty("url").trim());
 		return getDriver();
 	}
 
@@ -77,7 +77,6 @@ public class DriverFactory {
 					System.out.println("Invalid environment type");
 					break;
 				}
-				fis = new FileInputStream(file);
 				prop.load(fis);
 			} catch (IOException e) {
 				e.printStackTrace();
