@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -11,7 +13,11 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -19,6 +25,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class DriverFactory {
 
 	private Properties prop;
+	private OptionManager op;
 	public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
 
 	public WebDriver initBrowser(String browserName) {
@@ -86,6 +93,38 @@ public class DriverFactory {
 			e.printStackTrace();
 		}
 		return prop;
+	}
+
+	public void initRemoteDriver(String browser, String bVersion) {
+		System.out.println("Remote Browser: " + browser);
+		if (browser.equalsIgnoreCase("chrome")) {
+			DesiredCapabilities cap = DesiredCapabilities.chrome();
+			cap.setCapability(ChromeOptions.CAPABILITY, op.getChromeOption());
+			cap.setCapability("browsername", "chrome");
+			cap.setCapability("browserVersion", bVersion);
+			cap.setCapability("enableVNC", true);
+			cap.setCapability("enableVideo", true);
+
+			try {
+				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("hubURL")), cap));
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		else if (browser.equalsIgnoreCase("firefox")) {
+			DesiredCapabilities cap = DesiredCapabilities.chrome();
+			cap.setCapability(FirefoxOptions.FIREFOX_OPTIONS, op.getFirefoxOption());
+			cap.setCapability("browsername", "firefox");
+			cap.setCapability("browserVersion", bVersion);
+			cap.setCapability("enableVNC", true);
+			cap.setCapability("enableVideo", true);
+			try {
+				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("hubURL")), cap));
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public String getScreenshot() {
