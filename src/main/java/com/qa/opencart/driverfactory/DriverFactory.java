@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.TakesScreenshot;
@@ -17,10 +18,9 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DriverFactory {
 
-	
-	Properties prop;
+	private Properties prop;
+	public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
 
-	public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<WebDriver>();
 	public WebDriver initBrowser(String browserName) {
 
 		if (browserName.equalsIgnoreCase("chrome")) {
@@ -39,10 +39,9 @@ public class DriverFactory {
 		} else {
 			System.out.println("Select valid browser :" + browserName);
 		}
-
 		getDriver().manage().window().maximize();
-		getDriver().manage().deleteAllCookies();
-		getDriver().get(prop.getProperty("url").trim());
+		getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		getDriver().manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
 		return getDriver();
 	}
 
@@ -52,38 +51,41 @@ public class DriverFactory {
 
 	public Properties initProperties() {
 		prop = new Properties();
-		FileInputStream fis = null;
-		File file = null;
-		String env = System.getProperty("env");
+		FileInputStream ip = null;
 
+		String env = System.getProperty("env");
 		if (env == null) {
-			file = new File("./src/test/resources/configs/config.properties");
 			try {
-				fis = new FileInputStream(file);
+				ip = new FileInputStream("./src/test/resources/configs/config.properties");
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
 		} else {
+
 			try {
 				switch (env) {
 				case "qa":
-					file = new File("./src/test/resources/configs/config_qa.properties");
+					ip = new FileInputStream("./src/test/resources/configs/config_qa.properties");
 					break;
-				case "stagging":
-					file = new File("./src/test/resources/configs/config_stagging.properties");
+				case "stage":
+					ip = new FileInputStream("./src/test/resources/configs/config_stagging.properties");
 					break;
-
 				default:
-					System.out.println("Invalid environment type");
+					System.out.println("Please pass the right env value...");
 					break;
 				}
-				prop.load(fis);
-			} catch (IOException e) {
+			} catch (FileNotFoundException e) {
 				e.printStackTrace();
+
 			}
+
+		}
+		try {
+			prop.load(ip);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		return prop;
-
 	}
 
 	public String getScreenshot() {

@@ -25,12 +25,14 @@ public class TestBase extends DriverFactory {
 	@BeforeTest
 	public void setupBrowser() {
 		driverFactory = new DriverFactory();
-		driver = initBrowser("chrome");
 		prop = driverFactory.initProperties();
+		driver = initBrowser(prop.getProperty("browser"));
+		driver.get(prop.getProperty("url").trim());
 		loginPage = new LoginPage(driver);
 		accountPage = new AccountPage(driver);
 		productSearchPage = new ProductSearchPage(driver);
 		productInfoPage = new ProductInfoPage(driver);
+
 	}
 
 	@AfterTest
