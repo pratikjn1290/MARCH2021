@@ -18,7 +18,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.safari.SafariDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -32,17 +31,19 @@ public class DriverFactory {
 
 		if (browserName.equalsIgnoreCase("chrome")) {
 			WebDriverManager.chromedriver().setup();
-			tlDriver.set(new ChromeDriver());
-		}
-
-		else if (browserName.equalsIgnoreCase("firefox")) {
+			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
+				initRemoteDriver("chrome");
+			} else {
+				tlDriver.set(new ChromeDriver());
+			}
+		} else if (browserName.equalsIgnoreCase("firefox")) {
 			WebDriverManager.firefoxdriver().setup();
-			tlDriver.set(new FirefoxDriver());
+			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
+				initBrowser("firefox");
+			} else {
+				tlDriver.set(new FirefoxDriver());
+			}
 
-		}
-
-		else if (browserName.equalsIgnoreCase("safari")) {
-			tlDriver.set(new SafariDriver());
 		} else {
 			System.out.println("Select valid browser :" + browserName);
 		}
@@ -95,13 +96,12 @@ public class DriverFactory {
 		return prop;
 	}
 
-	public void initRemoteDriver(String browser, String bVersion) {
+	public void initRemoteDriver(String browser) {
 		System.out.println("Remote Browser: " + browser);
 		if (browser.equalsIgnoreCase("chrome")) {
 			DesiredCapabilities cap = DesiredCapabilities.chrome();
 			cap.setCapability(ChromeOptions.CAPABILITY, op.getChromeOption());
 			cap.setCapability("browsername", "chrome");
-			cap.setCapability("browserVersion", bVersion);
 			cap.setCapability("enableVNC", true);
 			cap.setCapability("enableVideo", true);
 
@@ -116,7 +116,6 @@ public class DriverFactory {
 			DesiredCapabilities cap = DesiredCapabilities.chrome();
 			cap.setCapability(FirefoxOptions.FIREFOX_OPTIONS, op.getFirefoxOption());
 			cap.setCapability("browsername", "firefox");
-			cap.setCapability("browserVersion", bVersion);
 			cap.setCapability("enableVNC", true);
 			cap.setCapability("enableVideo", true);
 			try {
