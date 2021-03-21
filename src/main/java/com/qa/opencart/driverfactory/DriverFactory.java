@@ -27,11 +27,10 @@ public class DriverFactory {
 	private OptionManager op;
 	public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
 
-	public WebDriver initBrowser(Properties prop) {
-		String browserName = prop.getProperty("browser").trim();
+	public WebDriver initBrowser(String browserName) {
+		prop = new Properties();
 		op = new OptionManager(prop);
-
-		if(browserName.equalsIgnoreCase("chrome")) {
+		if (browserName.equalsIgnoreCase("chrome")) {
 			WebDriverManager.chromedriver().setup();
 			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
 				initRemoteDriver(browserName);
@@ -107,7 +106,7 @@ public class DriverFactory {
 			cap.setCapability("enableVideo", true);
 
 			try {
-				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("hubURL")), cap));
+				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("hubURL").trim()),cap));
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			}
@@ -120,7 +119,7 @@ public class DriverFactory {
 			cap.setCapability("enableVNC", true);
 			cap.setCapability("enableVideo", true);
 			try {
-				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("hubURL")), cap));
+				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("hubURL").trim()), cap));
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			}

@@ -7,6 +7,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
 import com.qa.opencart.driverfactory.DriverFactory;
+import com.qa.opencart.driverfactory.OptionManager;
 import com.qa.opencart.pages.AccountPage;
 import com.qa.opencart.pages.LoginPage;
 import com.qa.opencart.pages.ProductInfoPage;
@@ -26,8 +27,8 @@ public class TestBase extends DriverFactory {
 	public void setupBrowser() {
 		driverFactory = new DriverFactory();
 		prop = driverFactory.initProperties();
-		String bName = prop.getProperty("browser");
-		driver = initBrowser(prop);
+		String browser = prop.getProperty("browser").trim();
+		driver = initBrowser(browser);
 		driver.get(prop.getProperty("url").trim());
 		loginPage = new LoginPage(driver);
 		accountPage = new AccountPage(driver);
