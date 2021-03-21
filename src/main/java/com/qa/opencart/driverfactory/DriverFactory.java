@@ -23,12 +23,11 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DriverFactory {
 
-	private Properties prop;
-	private OptionManager op;
+	Properties prop;
+	OptionManager op;
 	public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
 
 	public WebDriver initBrowser(String browserName) {
-		prop = new Properties();
 		op = new OptionManager(prop);
 		if (browserName.equalsIgnoreCase("chrome")) {
 			WebDriverManager.chromedriver().setup();
@@ -42,6 +41,7 @@ public class DriverFactory {
 			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
 				initRemoteDriver(browserName);
 			} else {
+				
 				tlDriver.set(new FirefoxDriver(op.getFirefoxOption()));
 			}
 
@@ -49,7 +49,8 @@ public class DriverFactory {
 			System.out.println("Select valid browser :" + browserName);
 		}
 		getDriver().manage().window().maximize();
-		getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		getDriver().manage().deleteAllCookies();
+		getDriver().get(prop.getProperty("url").trim());
 		getDriver().manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
 		return getDriver();
 	}
