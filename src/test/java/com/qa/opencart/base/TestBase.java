@@ -15,21 +15,20 @@ import com.qa.opencart.pages.ProductSearchPage;
 
 public class TestBase extends DriverFactory {
 
-	public DriverFactory driverFactory;
+	public DriverFactory df;
 	public LoginPage loginPage;
 	public AccountPage accountPage;
 	public ProductSearchPage productSearchPage;
 	public ProductInfoPage productInfoPage;
 	public Properties prop;
-	public WebDriver driver;
+	private WebDriver driver;
 
 	@BeforeTest
 	public void setupBrowser() {
-		driverFactory = new DriverFactory();
-		prop = driverFactory.initProperties();
-		String browser = prop.getProperty("browser").trim();
-		driver = initBrowser(browser);
-		driver.get(prop.getProperty("url").trim());
+		df = new DriverFactory();
+		prop = df.initProperties();
+		String bName = prop.getProperty("browser").trim();
+		driver = df.initBrowser(bName);
 		loginPage = new LoginPage(driver);
 		accountPage = new AccountPage(driver);
 		productSearchPage = new ProductSearchPage(driver);
