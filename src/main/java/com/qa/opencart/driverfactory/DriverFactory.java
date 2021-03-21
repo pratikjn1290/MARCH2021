@@ -27,21 +27,23 @@ public class DriverFactory {
 	private OptionManager op;
 	public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
 
-	public WebDriver initBrowser(String browserName) {
+	public WebDriver initBrowser(Properties prop) {
+		String browserName = prop.getProperty("browser").trim();
+		op = new OptionManager(prop);
 
-		if (browserName.equalsIgnoreCase("chrome")) {
+		if(browserName.equalsIgnoreCase("chrome")) {
 			WebDriverManager.chromedriver().setup();
 			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
-				initRemoteDriver("chrome");
+				initRemoteDriver(browserName);
 			} else {
-				tlDriver.set(new ChromeDriver());
+				tlDriver.set(new ChromeDriver(op.getChromeOption()));
 			}
 		} else if (browserName.equalsIgnoreCase("firefox")) {
 			WebDriverManager.firefoxdriver().setup();
 			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
-				initBrowser("firefox");
+				initRemoteDriver(browserName);
 			} else {
-				tlDriver.set(new FirefoxDriver());
+				tlDriver.set(new FirefoxDriver(op.getFirefoxOption()));
 			}
 
 		} else {
@@ -96,8 +98,7 @@ public class DriverFactory {
 		return prop;
 	}
 
-	public void initRemoteDriver(String browser) {
-		System.out.println("Remote Browser: " + browser);
+	private void initRemoteDriver(String browser) {
 		if (browser.equalsIgnoreCase("chrome")) {
 			DesiredCapabilities cap = DesiredCapabilities.chrome();
 			cap.setCapability(ChromeOptions.CAPABILITY, op.getChromeOption());

@@ -26,7 +26,8 @@ public class TestBase extends DriverFactory {
 	public void setupBrowser() {
 		driverFactory = new DriverFactory();
 		prop = driverFactory.initProperties();
-		driver = initBrowser(prop.getProperty("browser"));
+		String bName = prop.getProperty("browser");
+		driver = initBrowser(prop);
 		driver.get(prop.getProperty("url").trim());
 		loginPage = new LoginPage(driver);
 		accountPage = new AccountPage(driver);
