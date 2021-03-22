@@ -1,39 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite thread-count="4" parallel="tests" name="Suite">
-
 	<listeners>
 		<listener
-			class-name="com.qa.opencart.listeners.TestAllureListener" />
+			class-name="com.qa.opencart.listeners.TestAllureListener"/>
 	</listeners>
 
 	<test name="loginPageTest">
-		<parameter name="browser" value="chrome" />
-		<parameter name="version" value="89.0" />
+		<parameter name="browser" value="firefox" />
+		<parameter name="version" value="83.0" />
 		<classes>
 			<class name="com.qa.opencart.tests.LoginPageTest"></class>
 		</classes>
 	</test>
 
 	<test name="AccountPageTest">
-		<parameter name="browser" value="chrome" />
-		<parameter name="version" value="89.0" />
+		<parameter name="browser" value="firefox" />
+		<parameter name="version" value="80.0" />
 		<classes>
 			<class name="com.qa.opencart.tests.AccountPageTest"></class>
 		</classes>
 	</test>
 
 	<test name="ProductSearchTest">
-		<parameter name="browser" value="chrome" />
-		<parameter name="version" value="89.0" />
+		<parameter name="browser" value="firefox" />
+		<parameter name="version" value="57.0" />
 		<classes>
 			<class name="com.qa.opencart.tests.ProductSearchTest"></class>
 		</classes>
 	</test>
 
 	<test name="ProductInfoTest">
-		<parameter name="browser" value="chrome" />
-		<parameter name="version" value="89.0" />
+		<parameter name="browser" value="firefox" />
+		<parameter name="version" value="83.0" />
 		<classes>
 			<class name="com.qa.opencart.tests.ProductInfoTest"></class>
 		</classes>

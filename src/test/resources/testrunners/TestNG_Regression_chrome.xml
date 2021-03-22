@@ -4,9 +4,8 @@
 
 	<listeners>
 		<listener
-			class-name="com.qa.opencart.listeners.TestAllureListener" />
+			class-name="com.qa.opencart.listeners.TestAllureListner" />
 	</listeners>
-
 	<test name="loginPageTest">
 		<parameter name="browser" value="chrome" />
 		<parameter name="version" value="89.0" />
@@ -16,8 +15,8 @@
 	</test>
 
 	<test name="AccountPageTest">
-		<parameter name="browser" value="chrome" />
-		<parameter name="version" value="89.0" />
+		<parameter name="browser" value="firefox" />
+		<parameter name="version" value="57.0" />
 		<classes>
 			<class name="com.qa.opencart.tests.AccountPageTest"></class>
 		</classes>
@@ -25,7 +24,7 @@
 
 	<test name="ProductSearchTest">
 		<parameter name="browser" value="chrome" />
-		<parameter name="version" value="89.0" />
+		<parameter name="version" value="85.0" />
 		<classes>
 			<class name="com.qa.opencart.tests.ProductSearchTest"></class>
 		</classes>
@@ -33,7 +32,7 @@
 
 	<test name="ProductInfoTest">
 		<parameter name="browser" value="chrome" />
-		<parameter name="version" value="89.0" />
+		<parameter name="version" value="64.0" />
 		<classes>
 			<class name="com.qa.opencart.tests.ProductInfoTest"></class>
 		</classes>
