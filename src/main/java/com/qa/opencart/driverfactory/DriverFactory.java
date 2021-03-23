@@ -98,12 +98,12 @@ public class DriverFactory {
 		return prop;
 	}
 
-	private void initRemoteDriver(String browser, String bVersion) {
-		if (browser.equalsIgnoreCase("chrome")) {
+	private void initRemoteDriver(String browserName, String browserVersion) {
+		if (browserName.equalsIgnoreCase("chrome")) {
 			DesiredCapabilities cap = DesiredCapabilities.chrome();
 			cap.setCapability(ChromeOptions.CAPABILITY, op.getChromeOption());
-			cap.setCapability("browsername", browser);
-			cap.setCapability("browserversion", bVersion);
+			cap.setCapability("browsername", browserName);
+			cap.setCapability("browserversion", browserVersion);
 			cap.setCapability("enableVNC", true);
 			cap.setCapability("enableVideo", false);
 
@@ -114,13 +114,13 @@ public class DriverFactory {
 			}
 		}
 
-		else if (browser.equalsIgnoreCase("firefox")) {
+		else if (browserName.equalsIgnoreCase("firefox")) {
 			DesiredCapabilities cap = DesiredCapabilities.chrome();
 			cap.setCapability(FirefoxOptions.FIREFOX_OPTIONS, op.getFirefoxOption());
-			cap.setCapability("browsername", browser);
+			cap.setCapability("browsername", browserName);
 			cap.setCapability("enableVNC", true);
 			cap.setCapability("enableVideo", false);
-			cap.setCapability("browserversion", bVersion);
+			cap.setCapability("browserversion", browserVersion);
 			try {
 				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("hubURL").trim()), cap));
 			} catch (MalformedURLException e) {
