@@ -24,8 +24,6 @@
 	</test>
 
 	<test name="ProductSearchTest">
-		<parameter name="browser" value="chrome" />
-		<parameter name="version" value="89.0" />
 		<classes>
 			<class name="com.qa.opencart.tests.ProductSearchTest"></class>
 		</classes>
