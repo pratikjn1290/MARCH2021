@@ -35,6 +35,9 @@ public class TestBase extends DriverFactory {
 		}
 		driver = df.initBrowser(browser, browserVersion);
 		loginPage = new LoginPage(driver);
+		accountPage = new AccountPage(driver);
+		productSearchPage = new ProductSearchPage(driver);
+		productInfoPage = new ProductInfoPage(driver); 
 	}
 
 	@AfterTest

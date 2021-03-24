@@ -21,7 +21,6 @@ public class ProductInfoTest extends TestBase {
 		productSearchPage.searchProductList("Imac");
 		Map<String, String> hm = productInfoPage.productInfo();
 		System.out.println(hm);
-
 		Assert.assertEquals(hm.get("productName"), "iMac");
 		Assert.assertEquals(hm.get("Brand"), "Apple");
 		Assert.assertEquals(hm.get("Product Code"), "Product 14");
